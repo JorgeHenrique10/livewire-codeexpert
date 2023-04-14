@@ -3,10 +3,12 @@
 namespace App\Http\Livewire\Expense;
 
 use App\Models\Expense;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class ExpenseEdit extends Component
 {
+    use AuthorizesRequests;
     public $identy;
     public $description;
     public $type;
@@ -20,6 +22,8 @@ class ExpenseEdit extends Component
 
     public function mount(Expense $expense)
     {
+        $this->authorize('update', $expense);
+
         $this->identy = $expense->id;
         $this->description = $expense->description;
         $this->type = $expense->type;
@@ -33,9 +37,10 @@ class ExpenseEdit extends Component
 
     public function updateExpense()
     {
+        $expense = Expense::find($this->identy);
         $this->validate();
 
-        (Expense::find($this->identy))->update([
+        $expense->update([
             'description' => $this->description,
             'type' => $this->type,
             'amount' => $this->amount
@@ -47,6 +52,6 @@ class ExpenseEdit extends Component
 
         $this->emit('expense::updated');
 
-        return redirect()->route('expenses.create')->with('message', 'Registro Atualizado com Sucesso!');
+        return redirect()->route('expenses.list')->with('message', 'Registro Atualizado com Sucesso!');
     }
 }

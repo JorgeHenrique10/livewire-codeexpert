@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Expense;
 
 use App\Models\Expense;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class ExpenseCreate extends Component
@@ -27,8 +28,7 @@ class ExpenseCreate extends Component
     {
         $this->validate();
 
-        Expense::create([
-            'user_id' => 1,
+        Auth::user()->expenses()->create([
             'description' => $this->description,
             'type' => $this->type,
             'amount' => $this->amount
