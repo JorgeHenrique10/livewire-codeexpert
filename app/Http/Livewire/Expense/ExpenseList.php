@@ -10,7 +10,7 @@ class ExpenseList extends Component
 {
     public function render()
     {
-        $expenses = Auth::user()->expenses()->paginate(3);
+        $expenses = Auth::user()->expenses()->orderBy('created_at', 'desc')->paginate(3);
 
         return view('livewire.expense.expense-list', ['expenses' => $expenses]);
     }

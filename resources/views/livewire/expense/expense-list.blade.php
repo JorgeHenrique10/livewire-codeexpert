@@ -30,7 +30,9 @@
                             R$ {{ number_format($expense->amount, 2, ',', '.') }}
                         </span>
                     </td>
-                    <td class="px-4 py-2 border">{{ $expense->created_at }}</td>
+                    <td class="px-4 py-2 border">
+                        {{ $expense->expense_date ? $expense->expense_date->format('d/m/Y H:i:s') : $expense->created_at->format('d/m/Y H:i:s') }}
+                    </td>
                     <td class="px-4 py-2 border">
                         <a class="px-4 py-2 rounded bg-blue-500 hover:bg-blue-300 text-white"
                             href="{{ route('expenses.edit', $expense->id) }}">Editar</a>
