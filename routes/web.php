@@ -3,6 +3,8 @@
 use App\Http\Livewire\Expense\ExpenseCreate;
 use App\Http\Livewire\Expense\ExpenseEdit;
 use App\Http\Livewire\Expense\ExpenseList;
+use App\Http\Livewire\Plan\PlanCreate;
+use App\Http\Livewire\Plan\PlanList;
 use App\Models\Expense;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
@@ -46,5 +48,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
             return response($photo)->header('Content-Type', $mineType);
         })->name('photo');
+    });
+
+    Route::prefix('plans')->name('plan.')->group(function () {
+        Route::get('/', PlanList::class)->name('list');
+        Route::get('create', PlanCreate::class)->name('create');
     });
 });
